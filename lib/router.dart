@@ -4,7 +4,7 @@ import 'view/screens/auth/forgot_password_screen.dart';
 import 'view/screens/auth/login_screen.dart';
 import 'view/screens/auth/register_screen.dart';
 import 'view/screens/auth/reset_password_screen.dart';
-import 'view/screens/auth/verify_account_screen.dart';
+import 'view/screens/auth/verify_email_screen.dart';
 import 'view/screens/home_screen.dart';
 import 'view/screens/splash_screen.dart';
 
@@ -21,8 +21,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
       case '/reset_password':
         return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
-      case 'verify_account':
-        return MaterialPageRoute(builder: (_) => VerifyAccountScreen());
+      case '/verify_email':
+        return MaterialPageRoute(builder: (_) => VerifyEmailScreen());
       case '/splash':
         return MaterialPageRoute(builder: (_) => SplashScreen());
       default:

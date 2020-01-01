@@ -162,7 +162,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget registerButton() {
     return CustomButton(
       name: 'Register Now',
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushNamed('/verify_email');
+      },
     );
   }
 

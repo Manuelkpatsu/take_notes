@@ -121,7 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Align(
       alignment: Alignment.centerRight,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed('/forgot_password');
+        },
         child: Text(
           'Forgot Password?',
         ),

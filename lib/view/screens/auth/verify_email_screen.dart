@@ -4,13 +4,14 @@ import 'package:takenotes/view/widgets/custom_back_button.dart';
 import 'package:takenotes/view/widgets/custom_button.dart';
 import 'package:takenotes/view/widgets/text_input_field.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
+class VerifyEmailScreen extends StatefulWidget {
   @override
-  _ForgotPasswordState createState() => _ForgotPasswordState();
+  _VerifyEmailScreenState createState() => _VerifyEmailScreenState();
 }
 
-class _ForgotPasswordState extends State<ForgotPasswordScreen> {
+class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +42,13 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                   emailText(),
                   SizedBox(height: 10),
                   emailTextField(),
+                  SizedBox(height: 15),
+                  passwordText(),
+                  SizedBox(height: 10),
+                  codeTextField(),
                   SizedBox(height: 30),
-                  submitButton()
+                  verifyEmailButton(),
+                  SizedBox(height: 15),
                 ],
               ),
             ),
@@ -63,7 +69,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
 
   Widget title() {
     return Text(
-      'Forgot Password',
+      'Verify Your Email',
       style: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w700,
@@ -74,7 +80,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
 
   Widget subTitle() {
     return Text(
-      'Please enter your email address.',
+      'Please enter the code sent to your email and verify the email.',
     );
   }
 
@@ -92,9 +98,22 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
     );
   }
 
-  Widget submitButton() {
+  Widget passwordText() {
+    return Text(
+      'Code',
+    );
+  }
+
+  Widget codeTextField() {
+    return TextInputField(
+      controller: codeController,
+      inputAction: TextInputAction.done,
+    );
+  }
+
+  Widget verifyEmailButton() {
     return CustomButton(
-      name: 'Submit',
+      name: 'Verify Email',
       onPressed: () {},
     );
   }
