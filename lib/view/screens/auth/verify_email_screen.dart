@@ -43,7 +43,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                   SizedBox(height: 10),
                   emailTextField(),
                   SizedBox(height: 15),
-                  passwordText(),
+                  codeText(),
                   SizedBox(height: 10),
                   codeTextField(),
                   SizedBox(height: 30),
@@ -98,7 +98,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     );
   }
 
-  Widget passwordText() {
+  Widget codeText() {
     return Text(
       'Code',
     );

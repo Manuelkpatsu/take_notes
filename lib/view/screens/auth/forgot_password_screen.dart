@@ -95,7 +95,9 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   Widget submitButton() {
     return CustomButton(
       name: 'Submit',
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushNamed('/reset_password');
+      },
     );
   }
 }
