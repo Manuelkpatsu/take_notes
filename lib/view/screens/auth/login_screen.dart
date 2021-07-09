@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   emailText(),
                   SizedBox(height: 10),
                   emailTextField(),
-                  SizedBox(height: 20),
+                  SizedBox(height: 15),
                   passwordText(),
                   SizedBox(height: 10),
                   passwordTextField(),
@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   loginButton(),
                   SizedBox(height: 15),
                   forgotPassword(),
-                  SizedBox(height: height * 0.1),
+                  SizedBox(height: height * 0.08),
                   createAccount(),
                 ],
               ),
@@ -96,7 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget emailTextField() {
     return TextInputField(
       controller: emailController,
-      hint: 'Email Address',
       inputAction: TextInputAction.next,
       inputType: TextInputType.emailAddress,
     );
@@ -113,7 +112,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget passwordTextField() {
     return PasswordInputField(
-      hint: 'Password',
       controller: passwordController,
       inputAction: TextInputAction.done,
     );
@@ -150,7 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           WidgetSpan(
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed('/register');
+              },
               child: Text(
                 'Register.',
                 style: TextStyle(
