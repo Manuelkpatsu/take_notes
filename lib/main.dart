@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'router.dart';
 
@@ -35,24 +36,26 @@ class MyApp extends StatelessWidget {
           ),
         ),
         textTheme: TextTheme(
-          headline4: TextStyle(
+          headline4: GoogleFonts.lato(
+            textStyle: Theme.of(context).textTheme.headline4,
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.grey.shade900,
           ),
-          bodyText2: TextStyle(
+          bodyText2: GoogleFonts.montserrat(
+            textStyle: Theme.of(context).textTheme.bodyText2,
             fontSize: 14,
             color: Colors.grey.shade900,
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            primary: Colors.black,
+            primary: Colors.transparent,
             onPrimary: Colors.white,
             elevation: 0,
             padding: EdgeInsets.fromLTRB(18, 10, 18, 10),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(5),
             ),
           ),
         ),

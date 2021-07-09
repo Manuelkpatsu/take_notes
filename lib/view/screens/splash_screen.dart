@@ -11,18 +11,14 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-//  @override
-//  void initState() {
-//    Timer(Duration(seconds: 3), () async {
-//      if (true) {
-//        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-//      } else {
-//        Navigator.of(context)
-//            .pushNamedAndRemoveUntil('/login', (route) => false);
-//      }
-//    });
-//    super.initState();
-//  }
+  @override
+  void initState() {
+    Timer(Duration(seconds: 5), () async {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/login', (route) => false);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
