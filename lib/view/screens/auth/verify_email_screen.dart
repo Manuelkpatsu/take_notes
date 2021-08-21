@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:takenotes/utils/validator.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_back_button.dart';
 import 'package:takenotes/view/widgets/custom_button.dart';
@@ -12,6 +13,7 @@ class VerifyEmailScreen extends StatefulWidget {
 class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +32,29 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             ),
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: height * 0.2),
-                  title(),
-                  SizedBox(height: 10),
-                  subTitle(),
-                  SizedBox(height: 50),
-                  emailText(),
-                  SizedBox(height: 10),
-                  emailTextField(),
-                  SizedBox(height: 15),
-                  codeText(),
-                  SizedBox(height: 10),
-                  codeTextField(),
-                  SizedBox(height: 30),
-                  verifyEmailButton(),
-                  SizedBox(height: 15),
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: height * 0.2),
+                    title(),
+                    SizedBox(height: 10),
+                    subTitle(),
+                    SizedBox(height: 50),
+                    emailText(),
+                    SizedBox(height: 10),
+                    emailTextField(),
+                    SizedBox(height: 15),
+                    codeText(),
+                    SizedBox(height: 10),
+                    codeTextField(),
+                    SizedBox(height: 30),
+                    verifyEmailButton(),
+                    SizedBox(height: 15),
+                  ],
+                ),
               ),
             ),
             Positioned(
@@ -95,6 +100,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       controller: emailController,
       inputAction: TextInputAction.next,
       inputType: TextInputType.emailAddress,
+      validator: Validator.code,
     );
   }
 
@@ -108,13 +114,19 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     return TextInputField(
       controller: codeController,
       inputAction: TextInputAction.done,
+      inputType: TextInputType.number,
+      validator: Validator.code,
     );
   }
 
   Widget verifyEmailButton() {
     return CustomButton(
       name: 'Verify Email',
-      onPressed: () {},
+      onPressed: () {
+        if (formKey.currentState.validate()) {
+          
+        }
+      },
     );
   }
 }

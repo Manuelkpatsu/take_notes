@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:takenotes/utils/validator.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_button.dart';
 import 'package:takenotes/view/widgets/password_input_field.dart';
@@ -16,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,34 +36,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: height * 0.2),
-                  title(),
-                  SizedBox(height: 50),
-                  usernameText(),
-                  SizedBox(height: 10),
-                  usernameTextField(),
-                  SizedBox(height: 15),
-                  emailText(),
-                  SizedBox(height: 10),
-                  emailTextField(),
-                  SizedBox(height: 15),
-                  passwordText(),
-                  SizedBox(height: 10),
-                  passwordTextField(),
-                  SizedBox(height: 15),
-                  confirmPasswordText(),
-                  SizedBox(height: 10),
-                  confirmPasswordTextField(),
-                  SizedBox(height: 20),
-                  registerButton(),
-                  SizedBox(height: height * 0.08),
-                  login(),
-                  SizedBox(height: 20),
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: height * 0.2),
+                    title(),
+                    SizedBox(height: 50),
+                    usernameText(),
+                    SizedBox(height: 10),
+                    usernameTextField(),
+                    SizedBox(height: 15),
+                    emailText(),
+                    SizedBox(height: 10),
+                    emailTextField(),
+                    SizedBox(height: 15),
+                    passwordText(),
+                    SizedBox(height: 10),
+                    passwordTextField(),
+                    SizedBox(height: 15),
+                    confirmPasswordText(),
+                    SizedBox(height: 10),
+                    confirmPasswordTextField(),
+                    SizedBox(height: 20),
+                    registerButton(),
+                    SizedBox(height: height * 0.08),
+                    login(),
+                    SizedBox(height: 20),
+                  ],
+                ),
               ),
             )
           ],
@@ -108,6 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       controller: usernameController,
       inputAction: TextInputAction.next,
       inputType: TextInputType.name,
+      validator: Validator.username,
     );
   }
 
@@ -125,6 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       controller: emailController,
       inputAction: TextInputAction.next,
       inputType: TextInputType.emailAddress,
+      validator: Validator.email,
     );
   }
 
@@ -141,6 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return PasswordInputField(
       controller: passwordController,
       inputAction: TextInputAction.next,
+      validator: Validator.password,
     );
   }
 
@@ -157,6 +165,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return PasswordInputField(
       controller: confirmPasswordController,
       inputAction: TextInputAction.done,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Please re-enter password';
+        }
+
+        if(passwordController.text != confirmPasswordController.text) {
+          return "Password does not match";
+        }
+
+        return null;
+      },
     );
   }
 
@@ -164,7 +183,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return CustomButton(
       name: 'Register Now',
       onPressed: () {
-        Navigator.of(context).pushNamed('/verify_email');
+        if (formKey.currentState.validate()) {
+          Navigator.of(context).pushNamed('/verify_email');
+        }
       },
     );
   }

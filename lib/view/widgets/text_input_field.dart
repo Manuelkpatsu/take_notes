@@ -4,16 +4,18 @@ class TextInputField extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType inputType;
   final TextInputAction inputAction;
+  final FormFieldValidator<String> validator;
 
   TextInputField({
     @required this.controller,
     this.inputType,
     this.inputAction,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       decoration: InputDecoration(
         border: InputBorder.none,
@@ -22,6 +24,7 @@ class TextInputField extends StatelessWidget {
       ),
       keyboardType: inputType,
       textInputAction: inputAction,
+      validator: validator,
     );
   }
 }

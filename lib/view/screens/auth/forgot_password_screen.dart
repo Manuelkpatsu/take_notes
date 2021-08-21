@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:takenotes/utils/validator.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_back_button.dart';
 import 'package:takenotes/view/widgets/custom_button.dart';
@@ -11,6 +12,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +31,24 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
             ),
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: height * 0.2),
-                  title(),
-                  SizedBox(height: 10),
-                  subTitle(),
-                  SizedBox(height: 50),
-                  emailText(),
-                  SizedBox(height: 10),
-                  emailTextField(),
-                  SizedBox(height: 30),
-                  submitButton()
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: height * 0.2),
+                    title(),
+                    SizedBox(height: 10),
+                    subTitle(),
+                    SizedBox(height: 50),
+                    emailText(),
+                    SizedBox(height: 10),
+                    emailTextField(),
+                    SizedBox(height: 30),
+                    submitButton()
+                  ],
+                ),
               ),
             ),
             Positioned(
@@ -89,6 +94,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
       controller: emailController,
       inputAction: TextInputAction.next,
       inputType: TextInputType.emailAddress,
+      validator: Validator.email,
     );
   }
 
@@ -96,7 +102,9 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
     return CustomButton(
       name: 'Submit',
       onPressed: () {
-        Navigator.of(context).pushNamed('/reset_password');
+        if (formKey.currentState.validate()) {
+          Navigator.of(context).pushNamed('/reset_password');
+        }
       },
     );
   }

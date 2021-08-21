@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:takenotes/utils/validator.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_button.dart';
 import 'package:takenotes/view/widgets/password_input_field.dart';
@@ -13,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,27 +33,30 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: height * 0.2),
-                  title(),
-                  SizedBox(height: 50),
-                  emailText(),
-                  SizedBox(height: 10),
-                  emailTextField(),
-                  SizedBox(height: 15),
-                  passwordText(),
-                  SizedBox(height: 10),
-                  passwordTextField(),
-                  SizedBox(height: 20),
-                  loginButton(),
-                  SizedBox(height: 15),
-                  forgotPassword(),
-                  SizedBox(height: height * 0.08),
-                  createAccount(),
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: height * 0.2),
+                    title(),
+                    SizedBox(height: 50),
+                    emailText(),
+                    SizedBox(height: 10),
+                    emailTextField(),
+                    SizedBox(height: 15),
+                    passwordText(),
+                    SizedBox(height: 10),
+                    passwordTextField(),
+                    SizedBox(height: 20),
+                    loginButton(),
+                    SizedBox(height: 15),
+                    forgotPassword(),
+                    SizedBox(height: height * 0.08),
+                    createAccount(),
+                  ],
+                ),
               ),
             )
           ],
@@ -98,6 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: emailController,
       inputAction: TextInputAction.next,
       inputType: TextInputType.emailAddress,
+      validator: Validator.email,
     );
   }
 
@@ -114,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return PasswordInputField(
       controller: passwordController,
       inputAction: TextInputAction.done,
+      validator: Validator.password,
     );
   }
 
@@ -134,7 +141,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget loginButton() {
     return CustomButton(
       name: 'Login',
-      onPressed: () {},
+      onPressed: () {
+        if (formKey.currentState.validate()) {
+          
+        }
+      },
     );
   }
 
