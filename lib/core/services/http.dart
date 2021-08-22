@@ -29,6 +29,8 @@ class HttpService {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ${await _getAccessToken()}'
     };
+
+    return http.post(_makeUrl(url), headers: header, body: json.encode(body));
   }
 
   // perform get requests
@@ -38,6 +40,7 @@ class HttpService {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ${await _getAccessToken()}'
     };
+
     return http.get(_makeUrl(url), headers: header);
   }
 
@@ -48,6 +51,7 @@ class HttpService {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ${await _getAccessToken()}'
     };
+    
     return http.put(_makeUrl(url), headers: header, body: json.encode(body));
   }
 

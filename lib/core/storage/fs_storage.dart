@@ -17,12 +17,12 @@ class FSStorage extends SecureStorage {
 
   @override
   Future<String> read(String key) async {
-    await _storage.read(key: key);
+    return await _storage.read(key: key);
   }
 
   @override
   Future<Map<String, dynamic>> readAll() async {
-    await _storage.readAll();
+    return await _storage.readAll();
   }
 
   @override
