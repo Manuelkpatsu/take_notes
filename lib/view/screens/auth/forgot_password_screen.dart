@@ -6,6 +6,8 @@ import 'package:takenotes/view/widgets/custom_button.dart';
 import 'package:takenotes/view/widgets/text_input_field.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
+  static const routeName = '/forgot_password';
+
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
 }

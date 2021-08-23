@@ -7,6 +7,8 @@ import 'package:takenotes/view/widgets/password_input_field.dart';
 import 'package:takenotes/view/widgets/text_input_field.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = '/login';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }

@@ -31,7 +31,7 @@ class RegistrationService {
       if (_http.isSuccessful(response)) {
         return json.decode(response.body)['message'];
       } else {
-        throw new Exception(response.reasonPhrase);
+        throw (json.decode(response.body)['message']);
       }
     } catch (e) {
       throw e;
@@ -49,7 +49,7 @@ class RegistrationService {
       if (_http.isSuccessful(response)) {
         return json.decode(response.body)['message'];
       } else {
-        throw new Exception(response.reasonPhrase);
+        throw (json.decode(response.body)['message']);
       }
     } catch (e) {
       throw e;

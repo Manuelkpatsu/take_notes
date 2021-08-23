@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:takenotes/core/view_models/registration_vm.dart';
 import 'package:takenotes/utils/validator.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_back_button.dart';
@@ -6,6 +8,8 @@ import 'package:takenotes/view/widgets/custom_button.dart';
 import 'package:takenotes/view/widgets/text_input_field.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
+  static const routeName = '/verify_email';
+
   @override
   _VerifyEmailScreenState createState() => _VerifyEmailScreenState();
 }
@@ -33,6 +37,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +56,9 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                     SizedBox(height: 10),
                     codeTextField(),
                     SizedBox(height: 30),
-                    verifyEmailButton(),
+                    Provider.of<RegistrationVM>(context).processing
+                        ? CircularProgressIndicator()
+                        : verifyEmailButton(),
                     SizedBox(height: 15),
                   ],
                 ),
@@ -122,9 +129,13 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   Widget verifyEmailButton() {
     return CustomButton(
       name: 'Verify Email',
-      onPressed: () {
+      onPressed: () async {
         if (formKey.currentState.validate()) {
-          
+          await Provider.of<RegistrationVM>(context, listen: false).activateAccount(
+            email: emailController.text.trim(),
+            code: codeController.text.trim(),
+            context: context,
+          );
         }
       },
     );

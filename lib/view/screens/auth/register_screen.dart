@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:takenotes/core/view_models/registration_vm.dart';
 import 'package:takenotes/utils/validator.dart';
+import 'package:takenotes/view/screens/auth/login_screen.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_button.dart';
 import 'package:takenotes/view/widgets/password_input_field.dart';
 import 'package:takenotes/view/widgets/text_input_field.dart';
 
 class RegisterScreen extends StatefulWidget {
+  static const routeName = '/register';
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -37,6 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +67,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 10),
                     confirmPasswordTextField(),
                     SizedBox(height: 20),
-                    registerButton(),
+                    Provider.of<RegistrationVM>(context).processing
+                        ? CircularProgressIndicator()
+                        : registerButton(),
                     SizedBox(height: height * 0.08),
                     login(),
                     SizedBox(height: 20),
@@ -170,7 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           return 'Please re-enter password';
         }
 
-        if(passwordController.text != confirmPasswordController.text) {
+        if (passwordController.text != confirmPasswordController.text) {
           return "Password does not match";
         }
 
@@ -182,9 +190,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget registerButton() {
     return CustomButton(
       name: 'Register Now',
-      onPressed: () {
+      onPressed: () async {
         if (formKey.currentState.validate()) {
-          Navigator.of(context).pushNamed('/verify_email');
+          await Provider.of<RegistrationVM>(context, listen: false).register(
+            username: usernameController.text.trim(),
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+            confirmPassword: confirmPasswordController.text.trim(),
+            context: context,
+          );
         }
       },
     );
@@ -203,7 +217,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           WidgetSpan(
             child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed('/login');
+                Navigator.of(context).pushNamed(LoginScreen.routeName);
               },
               child: Text(
                 'Login.',

@@ -5,12 +5,14 @@ class TextInputField extends StatelessWidget {
   final TextInputType inputType;
   final TextInputAction inputAction;
   final FormFieldValidator<String> validator;
+  final TextCapitalization textCapitalization;
 
   TextInputField({
     @required this.controller,
     this.inputType,
     this.inputAction,
     this.validator,
+    this.textCapitalization = TextCapitalization.none,
   });
 
   @override
@@ -25,6 +27,7 @@ class TextInputField extends StatelessWidget {
       keyboardType: inputType,
       textInputAction: inputAction,
       validator: validator,
+      textCapitalization: textCapitalization,
     );
   }
 }

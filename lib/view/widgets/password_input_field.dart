@@ -5,12 +5,14 @@ class PasswordInputField extends StatelessWidget {
   final TextInputType inputType;
   final TextInputAction inputAction;
   final FormFieldValidator<String> validator;
+  final TextCapitalization textCapitalization;
 
   PasswordInputField({
     @required this.controller,
     this.inputType,
     this.inputAction,
     this.validator,
+    this.textCapitalization = TextCapitalization.none,
   });
 
   @override
@@ -26,6 +28,7 @@ class PasswordInputField extends StatelessWidget {
       textInputAction: inputAction,
       obscureText: true,
       validator: validator,
+      textCapitalization: textCapitalization,
     );
   }
 }

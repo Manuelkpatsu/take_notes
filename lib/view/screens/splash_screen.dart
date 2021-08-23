@@ -5,6 +5,8 @@ import 'package:takenotes/utils/note_colors.dart';
 import 'package:takenotes/view/widgets/background_image.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const routeName = '/splash';
+  
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }

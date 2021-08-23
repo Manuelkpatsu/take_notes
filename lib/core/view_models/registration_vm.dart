@@ -1,4 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:takenotes/core/services/registration_service.dart';
+import 'package:takenotes/utils/helper.dart';
+import 'package:takenotes/view/screens/auth/login_screen.dart';
+import 'package:takenotes/view/screens/auth/verify_email_screen.dart';
 
 import '../locator.dart';
 import 'base_vm.dart';
@@ -17,6 +21,7 @@ class RegistrationVM extends BaseModel {
     String email,
     String password,
     String confirmPassword,
+    BuildContext context,
   }) async {
     processing = true;
     notifyListeners();
@@ -31,8 +36,13 @@ class RegistrationVM extends BaseModel {
         confirmPassword: confirmPassword,
       );
 
+      Helper.showSnackbar(context, message);
+      Navigator.of(context).pushNamed(VerifyEmailScreen.routeName);
+
     } catch (e) {
-      throw (e);
+      processing = false;
+      notifyListeners();
+      Helper.showSnackbar(context, e.toString());
     } finally {
       processing = false;
       notifyListeners();
@@ -43,6 +53,7 @@ class RegistrationVM extends BaseModel {
   Future<void> activateAccount({
     String email,
     String code,
+    BuildContext context,
   }) async {
     processing = true;
     notifyListeners();
@@ -54,8 +65,13 @@ class RegistrationVM extends BaseModel {
         email: email,
         code: code,
       );
+
+      Helper.showSnackbar(context, message);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
       
     } catch (e) {
+      processing = false;
+      notifyListeners();
       throw (e);
     } finally {
       processing = false;

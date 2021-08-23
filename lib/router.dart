@@ -11,19 +11,19 @@ import 'view/screens/splash_screen.dart';
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case HomeScreen.routeName:
         return MaterialPageRoute(builder: (_) => HomeScreen());
-      case '/login':
+      case LoginScreen.routeName:
         return MaterialPageRoute(builder: (_) => LoginScreen());
-      case '/register':
+      case RegisterScreen.routeName:
         return MaterialPageRoute(builder: (_) => RegisterScreen());
-      case '/forgot_password':
+      case ForgotPasswordScreen.routeName:
         return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
-      case '/reset_password':
+      case ResetPasswordScreen.routeName:
         return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
-      case '/verify_email':
+      case VerifyEmailScreen.routeName:
         return MaterialPageRoute(builder: (_) => VerifyEmailScreen());
-      case '/splash':
+      case SplashScreen.routeName:
         return MaterialPageRoute(builder: (_) => SplashScreen());
       default:
         return MaterialPageRoute(

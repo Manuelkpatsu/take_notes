@@ -7,6 +7,8 @@ import 'package:takenotes/view/widgets/password_input_field.dart';
 import 'package:takenotes/view/widgets/text_input_field.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
+  static const routeName = '/reset_password';
+
   @override
   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
