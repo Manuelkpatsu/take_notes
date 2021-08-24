@@ -41,7 +41,7 @@ class RegistrationService {
   /// Activate your account from the http server
   Future<String> activateAccount({String email, String code,}) async {
     try {
-      final response = await _http.post(ACTIVATE_ACCOUNT_ENDPOINT, {
+      final response = await _http.patch(ACTIVATE_ACCOUNT_ENDPOINT, {
         'email': email,
         'code': code,
       });

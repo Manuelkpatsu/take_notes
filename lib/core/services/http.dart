@@ -45,14 +45,14 @@ class HttpService {
   }
 
   // perform edit
-  Future<http.Response> put(String url, Map<String, dynamic> body) async {
+  Future<http.Response> patch(String url, Map<String, dynamic> body) async {
     final header = <String, String>{
       'Accept': 'application/json',
       'Content-type': 'application/json',
       'Authorization': 'Bearer ${await _getAccessToken()}'
     };
     
-    return http.put(_makeUrl(url), headers: header, body: json.encode(body));
+    return http.patch(_makeUrl(url), headers: header, body: json.encode(body));
   }
 
   // perform delete

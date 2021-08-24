@@ -72,7 +72,7 @@ class RegistrationVM extends BaseModel {
     } catch (e) {
       processing = false;
       notifyListeners();
-      throw (e);
+      Helper.showSnackbar(context, e.toString());
     } finally {
       processing = false;
       notifyListeners();
