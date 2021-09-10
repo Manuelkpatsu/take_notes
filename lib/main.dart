@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:takenotes/core/locator.dart';
 
+import 'core/view_models/auth_vm.dart';
 import 'core/view_models/registration_vm.dart';
 import 'router.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<AuthVM>(create: (_) => AuthVM()),
         ChangeNotifierProvider<RegistrationVM>(create: (_) => RegistrationVM())
       ],
       child: MaterialApp(

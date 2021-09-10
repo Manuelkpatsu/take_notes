@@ -64,7 +64,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                     codeTextField(),
                     SizedBox(height: 30),
                     Provider.of<RegistrationVM>(context).processing
-                        ? CircularProgressIndicator()
+                        ? Center(child: CircularProgressIndicator())
                         : verifyEmailButton(),
                     SizedBox(height: 15),
                   ],

@@ -1,23 +1,30 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:takenotes/core/view_models/auth_vm.dart';
 import 'package:takenotes/utils/note_colors.dart';
+import 'package:takenotes/view/screens/auth/login_screen.dart';
+import 'package:takenotes/view/screens/home_screen.dart';
 import 'package:takenotes/view/widgets/background_image.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splash';
-  
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
-    Timer(Duration(seconds: 5), () async {
+    Timer(Duration(seconds: 3), () async {
+      if (await Provider.of<AuthVM>(context, listen: false).isLoggedIn) {
+        Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+      } else {
         Navigator.of(context)
-            .pushNamedAndRemoveUntil('/login', (route) => false);
+            .pushNamedAndRemoveUntil(LoginScreen.routeName, (route) => false);
+      }
     });
     super.initState();
   }

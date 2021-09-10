@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:takenotes/core/view_models/auth_vm.dart';
 import 'package:takenotes/utils/validator.dart';
+import 'package:takenotes/view/screens/home_screen.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_button.dart';
 import 'package:takenotes/view/widgets/password_input_field.dart';
@@ -19,9 +23,31 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void _navigateToLogin() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
+    /// Gets the auth view model
+    final authVM = Provider.of<AuthVM>(context);
+
+    /// Listen for login and redirect
+    if (authVM.isLoginComplete) {
+      _navigateToLogin();
+    }
 
     return Scaffold(
       body: Container(
@@ -52,7 +78,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 10),
                     passwordTextField(),
                     SizedBox(height: 20),
-                    loginButton(),
+                    authVM.processing
+                        ? CircularProgressIndicator()
+                        : loginButton(),
                     SizedBox(height: 15),
                     forgotPassword(),
                     SizedBox(height: height * 0.08),
@@ -143,9 +171,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget loginButton() {
     return CustomButton(
       name: 'Login',
-      onPressed: () {
+      onPressed: () async {
         if (formKey.currentState.validate()) {
-          
+          await Provider.of<AuthVM>(context, listen: false).login(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim()
+          );
         }
       },
     );
