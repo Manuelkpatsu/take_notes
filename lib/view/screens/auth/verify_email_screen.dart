@@ -41,33 +41,35 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               right: -width * 0.4,
               child: BezierContainer(),
             ),
-            SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: height * 0.2),
-                    title(),
-                    SizedBox(height: 10),
-                    subTitle(),
-                    SizedBox(height: 50),
-                    emailText(),
-                    SizedBox(height: 10),
-                    emailTextField(),
-                    SizedBox(height: 15),
-                    codeText(),
-                    SizedBox(height: 10),
-                    codeTextField(),
-                    SizedBox(height: 30),
-                    Provider.of<RegistrationVM>(context).processing
-                        ? Center(child: CircularProgressIndicator())
-                        : verifyEmailButton(),
-                    SizedBox(height: 15),
-                  ],
+            SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: height * 0.2),
+                      title(),
+                      SizedBox(height: 10),
+                      subTitle(),
+                      SizedBox(height: 50),
+                      emailText(),
+                      SizedBox(height: 10),
+                      emailTextField(),
+                      SizedBox(height: 15),
+                      codeText(),
+                      SizedBox(height: 10),
+                      codeTextField(),
+                      SizedBox(height: 30),
+                      Provider.of<RegistrationVM>(context).processing
+                          ? Center(child: CircularProgressIndicator())
+                          : verifyEmailButton(),
+                      SizedBox(height: 15),
+                    ],
+                  ),
                 ),
               ),
             ),

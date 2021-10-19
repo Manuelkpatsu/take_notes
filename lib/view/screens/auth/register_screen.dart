@@ -23,6 +23,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool _showPassword = true;
+  bool _showConfirmPassword = true;
 
   @override
   void dispose() {
@@ -48,41 +50,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
               right: -width * 0.4,
               child: BezierContainer(),
             ),
-            SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: height * 0.2),
-                    title(),
-                    SizedBox(height: 50),
-                    usernameText(),
-                    SizedBox(height: 10),
-                    usernameTextField(),
-                    SizedBox(height: 15),
-                    emailText(),
-                    SizedBox(height: 10),
-                    emailTextField(),
-                    SizedBox(height: 15),
-                    passwordText(),
-                    SizedBox(height: 10),
-                    passwordTextField(),
-                    SizedBox(height: 15),
-                    confirmPasswordText(),
-                    SizedBox(height: 10),
-                    confirmPasswordTextField(),
-                    SizedBox(height: 20),
-                    Provider.of<RegistrationVM>(context).processing
-                        ? CircularProgressIndicator()
-                        : registerButton(),
-                    SizedBox(height: height * 0.08),
-                    login(),
-                    SizedBox(height: 20),
-                  ],
+            SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: height * 0.2),
+                      title(),
+                      SizedBox(height: 50),
+                      usernameText(),
+                      SizedBox(height: 10),
+                      usernameTextField(),
+                      SizedBox(height: 15),
+                      emailText(),
+                      SizedBox(height: 10),
+                      emailTextField(),
+                      SizedBox(height: 15),
+                      passwordText(),
+                      SizedBox(height: 10),
+                      passwordTextField(),
+                      SizedBox(height: 15),
+                      confirmPasswordText(),
+                      SizedBox(height: 10),
+                      confirmPasswordTextField(),
+                      SizedBox(height: 20),
+                      Provider.of<RegistrationVM>(context).processing
+                          ? CircularProgressIndicator()
+                          : registerButton(),
+                      SizedBox(height: height * 0.08),
+                      login(),
+                      SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
             )
@@ -166,6 +170,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       controller: passwordController,
       inputAction: TextInputAction.next,
       validator: Validator.password,
+      obscureText: _showPassword,
+      toggle: () => setState(() => _showPassword = !_showPassword),
     );
   }
 
@@ -193,6 +199,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         return null;
       },
+      obscureText: _showConfirmPassword,
+      toggle: () =>
+          setState(() => _showConfirmPassword = !_showConfirmPassword),
     );
   }
 

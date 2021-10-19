@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:takenotes/core/view_models/auth_vm.dart';
 import 'package:takenotes/utils/validator.dart';
-import 'package:takenotes/view/screens/home_screen.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_button.dart';
 import 'package:takenotes/view/widgets/password_input_field.dart';
@@ -21,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool _showPassword = true;
 
   @override
   void dispose() {
@@ -29,12 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _navigateToLogin() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
-    });
-  }
+  // void _navigateToLogin() {
+  //   SchedulerBinding.instance.addPostFrameCallback((_) {
+  //     Navigator.of(context)
+  //         .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
     final authVM = Provider.of<AuthVM>(context);
 
     /// Listen for login and redirect
-    if (authVM.isLoginComplete) {
-      _navigateToLogin();
-    }
+    // if (authVM.isLoginComplete) {
+    //   _navigateToLogin();
+    // }
 
     return Scaffold(
       body: Container(
@@ -59,33 +58,35 @@ class _LoginScreenState extends State<LoginScreen> {
               right: -width * 0.4,
               child: BezierContainer(),
             ),
-            SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: height * 0.2),
-                    title(),
-                    SizedBox(height: 50),
-                    emailText(),
-                    SizedBox(height: 10),
-                    emailTextField(),
-                    SizedBox(height: 15),
-                    passwordText(),
-                    SizedBox(height: 10),
-                    passwordTextField(),
-                    SizedBox(height: 20),
-                    authVM.processing
-                        ? CircularProgressIndicator()
-                        : loginButton(),
-                    SizedBox(height: 15),
-                    forgotPassword(),
-                    SizedBox(height: height * 0.08),
-                    createAccount(),
-                  ],
+            SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: height * 0.2),
+                      title(),
+                      SizedBox(height: 50),
+                      emailText(),
+                      SizedBox(height: 10),
+                      emailTextField(),
+                      SizedBox(height: 15),
+                      passwordText(),
+                      SizedBox(height: 10),
+                      passwordTextField(),
+                      SizedBox(height: 20),
+                      authVM.processing
+                          ? CircularProgressIndicator()
+                          : loginButton(),
+                      SizedBox(height: 15),
+                      forgotPassword(),
+                      SizedBox(height: height * 0.08),
+                      createAccount(),
+                    ],
+                  ),
                 ),
               ),
             )
@@ -151,6 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: passwordController,
       inputAction: TextInputAction.done,
       validator: Validator.password,
+      obscureText: _showPassword,
+      toggle: () => setState(() => _showPassword = !_showPassword),
     );
   }
 
@@ -175,7 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
         if (formKey.currentState.validate()) {
           await Provider.of<AuthVM>(context, listen: false).login(
             email: emailController.text.trim(),
-            password: passwordController.text.trim()
+            password: passwordController.text.trim(),
+            context: context,
           );
         }
       },

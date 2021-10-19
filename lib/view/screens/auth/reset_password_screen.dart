@@ -19,6 +19,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool _showPassword = true;
+  bool _showConfirmPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,31 +37,33 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               right: -width * 0.4,
               child: BezierContainer(),
             ),
-            SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: height * 0.2),
-                    title(),
-                    SizedBox(height: 50),
-                    codeText(),
-                    SizedBox(height: 10),
-                    codeTextField(),
-                    SizedBox(height: 15),
-                    newPasswordText(),
-                    SizedBox(height: 10),
-                    newPasswordTextField(),
-                    SizedBox(height: 15),
-                    confirmPasswordText(),
-                    SizedBox(height: 10),
-                    confirmPasswordTextField(),
-                    SizedBox(height: 30),
-                    resetPasswordButton(),
-                  ],
+            SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: height * 0.2),
+                      title(),
+                      SizedBox(height: 50),
+                      codeText(),
+                      SizedBox(height: 10),
+                      codeTextField(),
+                      SizedBox(height: 15),
+                      newPasswordText(),
+                      SizedBox(height: 10),
+                      newPasswordTextField(),
+                      SizedBox(height: 15),
+                      confirmPasswordText(),
+                      SizedBox(height: 10),
+                      confirmPasswordTextField(),
+                      SizedBox(height: 30),
+                      resetPasswordButton(),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -115,6 +119,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       controller: newPasswordController,
       inputAction: TextInputAction.next,
       validator: Validator.password,
+      obscureText: _showPassword,
+      toggle: () => setState(() => _showPassword = !_showPassword),
     );
   }
 
@@ -139,6 +145,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
         return null;
       },
+      obscureText: _showConfirmPassword,
+      toggle: () =>
+          setState(() => _showConfirmPassword = !_showConfirmPassword),
     );
   }
 

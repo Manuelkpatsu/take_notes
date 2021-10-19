@@ -9,7 +9,7 @@ class HttpService {
   static const String API_BASE_URL = 'https://my-notes.herokuapp.com/api';
 
   /// Base url for localhost api
-  static const String API_LOCALHOST_BASE_URL = 'http://192.168.100.4:3000/api';
+  static const String API_LOCALHOST_BASE_URL = 'http://192.168.100.3:3000/api';
 
   /// The secure storage
   SecureStorage _storage = sl<SecureStorage>();
@@ -19,7 +19,7 @@ class HttpService {
   }
 
   Future<String> _getAccessToken() async {
-    return await _storage.read('accessToken');
+    return await _storage.read('access-token');
   }
 
   // perform post requests
@@ -51,7 +51,7 @@ class HttpService {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ${await _getAccessToken()}'
     };
-    
+
     return http.patch(_makeUrl(url), headers: header, body: json.encode(body));
   }
 

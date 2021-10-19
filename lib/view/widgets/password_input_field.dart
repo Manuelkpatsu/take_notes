@@ -6,12 +6,16 @@ class PasswordInputField extends StatelessWidget {
   final TextInputAction inputAction;
   final FormFieldValidator<String> validator;
   final TextCapitalization textCapitalization;
+  final bool obscureText;
+  final Function toggle;
 
   PasswordInputField({
     @required this.controller,
     this.inputType,
     this.inputAction,
     this.validator,
+    this.obscureText,
+    this.toggle,
     this.textCapitalization = TextCapitalization.none,
   });
 
@@ -23,10 +27,14 @@ class PasswordInputField extends StatelessWidget {
         border: InputBorder.none,
         filled: true,
         fillColor: Color(0xfff3f3f4),
+        suffixIcon: IconButton(
+          icon: obscureText ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
+          onPressed: toggle,
+        )
       ),
       keyboardType: inputType,
       textInputAction: inputAction,
-      obscureText: true,
+      obscureText: obscureText,
       validator: validator,
       textCapitalization: textCapitalization,
     );
