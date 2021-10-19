@@ -8,6 +8,7 @@ import 'package:takenotes/view/screens/home_screen.dart';
 import 'package:takenotes/view/screens/splash_screen.dart';
 
 import 'core/view_models/auth_vm.dart';
+import 'core/view_models/password_vm.dart';
 import 'core/view_models/registration_vm.dart';
 import 'router.dart';
 
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthVM>(create: (_) => AuthVM()),
-        ChangeNotifierProvider<RegistrationVM>(create: (_) => RegistrationVM())
+        ChangeNotifierProvider<RegistrationVM>(create: (_) => RegistrationVM()),
+        ChangeNotifierProvider<PasswordVM>(create: (_) => PasswordVM()),
       ],
       child: Consumer<AuthVM>(
         builder: (BuildContext context, AuthVM authVM, Widget child) {

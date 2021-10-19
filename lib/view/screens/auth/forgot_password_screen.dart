@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:takenotes/core/view_models/password_vm.dart';
 import 'package:takenotes/utils/validator.dart';
 import 'package:takenotes/view/widgets/bezier_container.dart';
 import 'package:takenotes/view/widgets/custom_back_button.dart';
@@ -48,7 +50,9 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                     SizedBox(height: 10),
                     emailTextField(),
                     SizedBox(height: 30),
-                    submitButton()
+                    Provider.of<PasswordVM>(context).processing
+                        ? Center(child: CircularProgressIndicator())
+                        : submitButton()
                   ],
                 ),
               ),
@@ -103,9 +107,12 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   Widget submitButton() {
     return CustomButton(
       name: 'Submit',
-      onPressed: () {
+      onPressed: () async {
         if (formKey.currentState.validate()) {
-          Navigator.of(context).pushNamed('/reset_password');
+          await Provider.of<PasswordVM>(context, listen: false).forgotPassword(
+            email: emailController.text.trim(),
+            context: context,
+          );
         }
       },
     );
