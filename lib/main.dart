@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:takenotes/core/locator.dart';
+import 'package:takenotes/core/view_models/api_vm.dart';
 import 'package:takenotes/view/screens/auth/login_screen.dart';
 import 'package:takenotes/view/screens/home_screen.dart';
 import 'package:takenotes/view/screens/splash_screen.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthVM>(create: (_) => AuthVM()),
         ChangeNotifierProvider<RegistrationVM>(create: (_) => RegistrationVM()),
         ChangeNotifierProvider<PasswordVM>(create: (_) => PasswordVM()),
+        ChangeNotifierProvider<ApiVM>(create: (_) => ApiVM()),
       ],
       child: Consumer<AuthVM>(
         builder: (BuildContext context, AuthVM authVM, Widget child) {

@@ -57,7 +57,13 @@ class HttpService {
 
   // perform delete
   Future<http.Response> delete(String url) async {
-    return http.delete(_makeUrl(url));
+    final header = <String, String>{
+      'Accept': 'application/json',
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ${await _getAccessToken()}'
+    };
+    
+    return http.delete(_makeUrl(url), headers: header);
   }
 
   // check if http.response is successful
