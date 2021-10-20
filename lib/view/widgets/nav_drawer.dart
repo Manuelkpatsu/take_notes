@@ -14,6 +14,27 @@ class NavDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final authVM = Provider.of<AuthVM>(context);
 
+    String getInitials(String username) {
+      List<String> names = username.split(" ");
+      String initials = "";
+
+      // Return an empty string if username is null
+      if (username.isEmpty) return username;
+
+      // Take first character if string is a single word
+      if (names.length == 1) return username.characters.first; 
+      
+      if (names.length >= 2) {
+        for (var i = 0; i < 2; i++) {
+          initials += '${names[i][0]}';
+        }
+
+        return initials;
+      }
+
+      return initials;
+    }
+
     return Container(
       width: MediaQuery.of(context).size.width * 0.75,
       child: Drawer(
@@ -38,17 +59,17 @@ class NavDrawer extends StatelessWidget {
                 return UserAccountsDrawerHeader(
                   decoration: BoxDecoration(color: Colors.black),
                   accountName: Text(
-                    user.username,
+                    user.username != null ? user.username : "",
                     style: TextStyle(color: Colors.white),
                   ),
                   accountEmail: Text(
-                    user.email,
+                    user.email != null ? user.email : "",
                     style: TextStyle(color: Colors.white),
                   ),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.white,
                     child: Text(
-                      'MA',
+                      getInitials(user.username.isNotEmpty ? user.username : ""),
                       style: TextStyle(fontSize: 40, color: Colors.black),
                     ),
                   ),
