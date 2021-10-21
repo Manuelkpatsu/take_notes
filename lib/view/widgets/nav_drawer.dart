@@ -79,17 +79,6 @@ class NavDrawer extends StatelessWidget {
             ListTile(
               minLeadingWidth: 10,
               leading: Icon(
-                Icons.note_add_outlined,
-                color: Colors.black,
-              ),
-              title: Text('Add New Note', style: TextStyle(fontSize: 16)),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              minLeadingWidth: 10,
-              leading: Icon(
                 Icons.logout_outlined,
                 color: Colors.black,
               ),

@@ -5,6 +5,8 @@ import 'view/screens/auth/login_screen.dart';
 import 'view/screens/auth/register_screen.dart';
 import 'view/screens/auth/reset_password_screen.dart';
 import 'view/screens/auth/verify_email_screen.dart';
+import 'view/screens/detailed_note.dart';
+import 'view/screens/add_note.dart';
 import 'view/screens/home_screen.dart';
 import 'view/screens/splash_screen.dart';
 
@@ -25,6 +27,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => VerifyEmailScreen());
       case SplashScreen.routeName:
         return MaterialPageRoute(builder: (_) => SplashScreen());
+      case AddNote.routeName:
+        return MaterialPageRoute(builder: (_) => AddNote());
+      case DetailedNote.routeName:
+        return MaterialPageRoute(builder: (_) => DetailedNote());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
