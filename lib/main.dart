@@ -56,15 +56,15 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               scaffoldBackgroundColor: Colors.white,
               primaryColor: Colors.white,
-              accentColor: Colors.black,
+              accentColor: Colors.black87,
               appBarTheme: AppBarTheme(
                 elevation: 0,
                 brightness: Brightness.dark,
-                backgroundColor: Colors.transparent,
-                iconTheme: IconThemeData(color: Colors.black),
+                backgroundColor: Colors.black87,
+                iconTheme: IconThemeData(color: Colors.white),
                 textTheme: TextTheme(
                   headline6: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),

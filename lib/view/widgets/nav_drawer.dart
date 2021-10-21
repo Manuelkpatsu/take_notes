@@ -41,13 +41,13 @@ class NavDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            FutureBuilder(
+            FutureBuilder<User>(
               future: Provider.of<ApiVM>(context).currentUser(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                 if (snapshot.data == null)
                   return UserAccountsDrawerHeader(
-                    decoration: BoxDecoration(color: Colors.black),
+                    decoration: BoxDecoration(color: Colors.black87),
                     accountName: Text(''),
                     accountEmail: Text(''),
                     currentAccountPicture:
@@ -57,7 +57,7 @@ class NavDrawer extends StatelessWidget {
                 User user = snapshot.data;
 
                 return UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(color: Colors.black),
+                  decoration: BoxDecoration(color: Colors.black87),
                   accountName: Text(
                     user.username != null ? user.username : "",
                     style: TextStyle(color: Colors.white),

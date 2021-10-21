@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:takenotes/core/view_models/api_vm.dart';
 import 'package:takenotes/view/screens/add_note.dart';
+import 'package:takenotes/view/screens/detailed_note.dart';
 import 'package:takenotes/view/widgets/nav_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
