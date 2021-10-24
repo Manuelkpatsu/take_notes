@@ -85,21 +85,32 @@ class _DetailedNoteState extends State<DetailedNote> {
                   controller: _controller,
                 ),
                 SizedBox(height: 10),
-                TextField(
-                  controller: _titleController,
-                  autofocus: true,
-                  readOnly: !_edit,
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  textCapitalization: TextCapitalization.sentences,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Title',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _titleController,
+                    autofocus: true,
+                    readOnly: !_edit,
+                    maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    textCapitalization: TextCapitalization.sentences,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          width: 0, 
+                          style: BorderStyle.none,
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.black12,
+                      hintText: 'Title',
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    ),
                   ),
                 ),
                 Expanded(

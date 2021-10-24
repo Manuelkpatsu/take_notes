@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Helper {
   /// Shows a snackbar
@@ -83,5 +84,15 @@ class Helper {
         );
       },
     );
+  }
+
+  static String formatDateTime(String dateTime) {
+    var formatter = new DateFormat('MMM dd, yyyy');
+    var formatter2 = new DateFormat('hh:mm a');
+    DateTime dt = DateTime.parse(dateTime);
+    if (dt.day == DateTime.now().day)
+      return formatter2.format(dt);
+    else
+      return formatter.format(dt);
   }
 }

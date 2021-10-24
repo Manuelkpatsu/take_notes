@@ -34,21 +34,32 @@ class _AddNoteState extends State<AddNote> {
             controller: _controller
           ),
           SizedBox(height: 10),
-          TextField(
-            controller: _titleController,
-            autofocus: true,
-            maxLines: null,
-            keyboardType: TextInputType.multiline,
-            textCapitalization: TextCapitalization.sentences,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              controller: _titleController,
+              autofocus: true,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              textCapitalization: TextCapitalization.sentences,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    width: 0, 
+                    style: BorderStyle.none,
+                  ),
+                ),
+                filled: true,
+                fillColor: Colors.black12,
+                hintText: 'Title',
+                contentPadding: EdgeInsets.symmetric(horizontal: 10)
+              )
             ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: 'Title',
-              contentPadding: EdgeInsets.symmetric(horizontal: 20)
-            )
           ),
           Expanded(
             child: Padding(

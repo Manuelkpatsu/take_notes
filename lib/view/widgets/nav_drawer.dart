@@ -12,8 +12,7 @@ class NavDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authVM = Provider.of<AuthVM>(context);
-
+    
     String getInitials(String username) {
       List<String> names = username.split(" ");
       String initials = "";
@@ -42,7 +41,7 @@ class NavDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             FutureBuilder<User>(
-              future: Provider.of<ApiVM>(context).currentUser(),
+              future: Provider.of<ApiVM>(context, listen: false).currentUser(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                 if (snapshot.data == null)
@@ -54,6 +53,7 @@ class NavDrawer extends StatelessWidget {
                         CircleAvatar(backgroundColor: Colors.white),
                   );
 
+                print(snapshot.data.username);
                 User user = snapshot.data;
 
                 return UserAccountsDrawerHeader(
@@ -89,7 +89,7 @@ class NavDrawer extends StatelessWidget {
                   context,
                   'Do you want to logout?',
                   () {
-                    authVM.logout(appContext);
+                    Provider.of<AuthVM>(context).logout(appContext);
                     Navigator.of(appContext).pop();
                   },
                 );
