@@ -1,36 +1,36 @@
 class User {
-  final String id;
-  final String username;
-  final String email;
-  final bool active;
-  final String createdAt;
-  final String updatedAt;
+  bool active;
+  String id;
+  String email;
+  String username;
+  String createdAt;
+  String updatedAt;
 
   User({
-    this.id,
-    this.username,
-    this.email,
     this.active,
+    this.id,
+    this.email,
+    this.username,
     this.createdAt,
     this.updatedAt,
   });
 
-  User.fromData(Map<String, dynamic> data)
-      : id = data['_id'],
-        username = data['username'],
-        email = data['email'],
-        active = data['active'],
-        createdAt = data['createdAt'],
-        updatedAt = data['updatedAt'];
+  User.fromJson(Map<String, dynamic> json) {
+    active = json['active'];
+    id = json['_id'];
+    email = json['email'];
+    username = json['username'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'username': username,
-      'email': email,
-      'active': active,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-    };
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['active'] = this.active;
+    data['email'] = this.email;
+    data['username'] = this.username;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
   }
 }

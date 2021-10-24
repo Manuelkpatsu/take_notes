@@ -20,7 +20,7 @@ class APIService {
       if (_http.isSuccessful(response)) {
         final user = json.decode(response.body)['user'];
         
-        return User.fromData(user);
+        return User.fromJson(user);
       } else {
         throw (json.decode(response.body)['message']);
       }
