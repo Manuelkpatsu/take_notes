@@ -5,8 +5,8 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   CustomButton({
-    @required this.name,
-    @required this.onPressed,
+    required this.name,
+    required this.onPressed,
   });
 
   @override

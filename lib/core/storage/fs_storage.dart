@@ -17,7 +17,8 @@ class FSStorage extends SecureStorage {
 
   @override
   Future<String> read(String key) async {
-    return await _storage.read(key: key);
+    final String? value = await _storage.read(key: key);
+    return value!;
   }
 
   @override

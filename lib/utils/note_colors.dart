@@ -22,4 +22,27 @@ class NoteColors {
     blue,
     purple,
   ];
+
+  static Color getValue(int? color) {
+    switch (color) {
+      case 0:
+        return black;
+      case 1:
+        return amber;
+      case 2:
+        return white;
+      case 3:
+        return yellow;
+      case 4:
+        return green;
+      case 5:
+        return red;
+      case 6:
+        return blue;
+      case 7:
+        return purple;
+      default:
+        return Colors.white;
+    }
+  }
 }

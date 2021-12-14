@@ -8,6 +8,7 @@ import 'package:takenotes/core/view_models/pref_vm.dart';
 import 'package:takenotes/view/screens/auth/login_screen.dart';
 import 'package:takenotes/view/screens/home_screen.dart';
 import 'package:takenotes/view/screens/splash_screen.dart';
+import 'package:material_color_gen/material_color_gen.dart';
 
 import 'core/view_models/auth_vm.dart';
 import 'core/view_models/password_vm.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<PrefVm>(create: (_) => PrefVm()),
       ],
       child: Consumer<AuthVM>(
-        builder: (BuildContext context, AuthVM authVM, Widget child) {
+        builder: (BuildContext context, AuthVM authVM, Widget? child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: FutureBuilder(
@@ -58,18 +59,17 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               scaffoldBackgroundColor: Colors.white,
               primaryColor: Colors.white,
-              accentColor: Colors.black87,
+              brightness: Brightness.light,
+              primarySwatch: Color(0xDD000000).toMaterialColor(),
               appBarTheme: AppBarTheme(
                 elevation: 0,
-                brightness: Brightness.dark,
+                systemOverlayStyle: SystemUiOverlayStyle.dark,
                 backgroundColor: Colors.black87,
                 iconTheme: IconThemeData(color: Colors.white),
-                textTheme: TextTheme(
-                  headline6: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
+                titleTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               textTheme: TextTheme(

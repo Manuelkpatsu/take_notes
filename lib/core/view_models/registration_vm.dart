@@ -17,11 +17,11 @@ class RegistrationVM extends BaseModel {
 
   /// Register the user
   Future<void> register({
-    String username,
-    String email,
-    String password,
-    String confirmPassword,
-    BuildContext context,
+    required String username,
+    required String email,
+    required String password,
+    required String confirmPassword,
+    required BuildContext context,
   }) async {
     processing = true;
     notifyListeners();
@@ -63,9 +63,9 @@ class RegistrationVM extends BaseModel {
 
   /// Activate the user's account
   Future<void> activateAccount({
-    String email,
-    String code,
-    BuildContext context,
+    required String email,
+    required String code,
+    required   BuildContext context,
   }) async {
     processing = true;
     notifyListeners();

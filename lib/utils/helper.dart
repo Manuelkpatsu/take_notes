@@ -17,7 +17,7 @@ class Helper {
   static void showModalSheet(
     BuildContext context,
     String title,
-    Function onPressed,
+    VoidCallback onPressed,
   ) {
     showModalBottomSheet(
       context: context,
@@ -94,5 +94,51 @@ class Helper {
       return formatter2.format(dt);
     else
       return formatter.format(dt);
+  }
+
+  static String getInitials(String username) {
+    List<String> names = username.split(" ");
+    String initials = "";
+
+    // Return an empty string if username is null
+    if (username.isEmpty) return username;
+
+    // Take first character if string is a single word
+    if (names.length == 1) return username.characters.first;
+
+    if (names.length >= 2) {
+      for (var i = 0; i < 2; i++) {
+        initials += '${names[i][0]}';
+      }
+
+      return initials;
+    }
+
+    return initials;
+  }
+
+  static void showColorPallete({
+    required BuildContext context,
+    required Widget child,
+  }) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isDismissible: true,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(10),
+          child: Container(
+            height: 100,
+            child: Card(
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: child,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

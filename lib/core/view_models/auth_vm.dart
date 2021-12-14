@@ -26,16 +26,16 @@ class AuthVM extends BaseModel {
   /// Requests a bool to indicate whether a user
   /// is logged in or not
   Future<bool> get isLoggedIn async {
-    return null != (await _storage.read(ACCESS_TOKEN_KEY));
+    return (await _storage.read(ACCESS_TOKEN_KEY)).isNotEmpty;
   }
 
   bool get isLoginComplete => _loginState == LOGIN_STATE_LOGGED_IN;
 
   /// Logs in the user
   Future<void> login({
-    String email,
-    String password,
-    BuildContext context,
+    required String email,
+    required String password,
+    required BuildContext context,
   }) async {
     processing = true;
     notifyListeners();

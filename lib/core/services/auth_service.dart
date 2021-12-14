@@ -15,7 +15,10 @@ class AuthService {
   HttpService _http = sl<HttpService>();
 
   /// Requests an access token from the http server
-  Future<String> requestAccessToken({String email, String password}) async {
+  Future<String> requestAccessToken({
+    required String email,
+    required String password,
+  }) async {
     try {
       final response = await _http
           .post(LOGIN_USER_ENDPOINT, {'email': email, 'password': password});

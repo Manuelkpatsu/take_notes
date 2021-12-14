@@ -9,11 +9,11 @@ class NoteTile extends StatelessWidget {
   final Color color;
 
   NoteTile({
-    @required this.title,
-    @required this.content,
-    @required this.updatedAt,
-    @required this.onPressed,
-    @required this.color,
+    required this.title,
+    required this.content,
+    required this.updatedAt,
+    required this.onPressed,
+    required this.color,
   });
 
   @override

@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:takenotes/utils/helper.dart';
-
-import 'memoji_colors.dart';
 
 class NoteGrid extends StatelessWidget {
   final String title;
@@ -13,11 +9,11 @@ class NoteGrid extends StatelessWidget {
   final Color color;
 
   NoteGrid({
-    @required this.title,
-    @required this.content,
-    @required this.updatedAt,
-    @required this.onPressed,
-    @required this.color,
+    required this.title,
+    required this.content,
+    required this.updatedAt,
+    required this.onPressed,
+    required this.color,
   });
 
   @override

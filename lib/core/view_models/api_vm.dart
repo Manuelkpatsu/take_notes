@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:takenotes/core/models/note.dart';
 import 'package:takenotes/core/models/user.dart';
 import 'package:takenotes/core/services/api_service.dart';
 import 'package:takenotes/core/view_models/base_vm.dart';
@@ -9,6 +10,9 @@ import '../locator.dart';
 class ApiVM extends BaseModel {
   /// The password service
   APIService _apiService = sl<APIService>();
+
+  /// Indicates if authentication is being processed.
+  bool processing = false;
 
   Future<User> currentUser() async {
     User _user = User();
@@ -27,5 +31,14 @@ class ApiVM extends BaseModel {
     }
 
     return _user;
+  }
+
+  Future<List<Note>> fetchNotes() async {
+
+    return _apiService.fetchNotes()
+      .then((notes) => notes)
+      .catchError((error) {
+        print(error);
+      });
   }
 }

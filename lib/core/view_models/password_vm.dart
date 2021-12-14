@@ -17,8 +17,8 @@ class PasswordVM extends BaseModel {
 
   /// Get token to reset new password
   Future<void> forgotPassword({
-    String email,
-    BuildContext context,
+    required String email,
+    required BuildContext context,
   }) async {
     processing = true;
     notifyListeners();
@@ -54,10 +54,10 @@ class PasswordVM extends BaseModel {
 
   /// Reset your new password
   Future<void> resetPassword({
-    String token,
-    String newPassword,
-    String confirmPassword,
-    BuildContext context,
+    required String token,
+    required String newPassword,
+    required String confirmPassword,
+    required BuildContext context,
   }) async {
     processing = true;
     notifyListeners();

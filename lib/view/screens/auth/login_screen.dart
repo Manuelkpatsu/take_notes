@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return CustomButton(
       name: 'Login',
       onPressed: () async {
-        if (formKey.currentState.validate()) {
+        if (formKey.currentState!.validate()) {
           await Provider.of<AuthVM>(context, listen: false).login(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),

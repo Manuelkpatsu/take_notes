@@ -14,7 +14,7 @@ class PrefVm extends BaseModel {
   void getTileState() {
     _pref.isTile()
       .then((viewType) {
-        if (viewType != null) {
+        if (viewType.isNotEmpty) {
           if (viewType == '0') {
             isTile = true;
             notifyListeners();

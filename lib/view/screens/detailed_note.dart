@@ -6,6 +6,9 @@ import 'package:flutter_quill/models/documents/document.dart';
 import 'package:flutter_quill/widgets/toolbar.dart';
 import 'package:flutter_quill/widgets/editor.dart';
 import 'package:flutter_quill/widgets/controller.dart';
+import 'package:takenotes/utils/helper.dart';
+import 'package:takenotes/view/widgets/color_pallete.dart';
+import 'package:takenotes/view/widgets/memoji_colors.dart';
 
 class DetailedNote extends StatefulWidget {
   static const routeName = '/detailed_note';
@@ -17,10 +20,11 @@ class DetailedNote extends StatefulWidget {
 class _DetailedNoteState extends State<DetailedNote> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   FocusNode _focusNode = FocusNode();
-  QuillController _controller;
-  TextEditingController _titleController;
+  QuillController? _controller;
+  TextEditingController? _titleController;
   bool _loading = false;
   bool _edit = false;
+  int _selectedColor = 0;
 
   @override
   void initState() {
@@ -33,7 +37,7 @@ class _DetailedNoteState extends State<DetailedNote> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -74,6 +78,17 @@ class _DetailedNoteState extends State<DetailedNote> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Edit Note'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Helper.showColorPallete(
+                context: context,
+                child: colorPalletes(context)
+              );
+            },
+            icon: Icon(Icons.palette_outlined),
+          ),
+        ],
       ),
       body: _loading
           ? Center(
@@ -82,7 +97,12 @@ class _DetailedNoteState extends State<DetailedNote> {
           : Column(
               children: [
                 QuillToolbar.basic(
-                  controller: _controller,
+                  controller: _controller!,
+                  showImageButton: false,
+                  showVideoButton: false,
+                  showCameraButton: false,
+                  showAlignmentButtons: true,
+                  showHorizontalRule: true,
                 ),
                 SizedBox(height: 10),
                 Padding(
@@ -102,7 +122,7 @@ class _DetailedNoteState extends State<DetailedNote> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          width: 0, 
+                          width: 0,
                           style: BorderStyle.none,
                         ),
                       ),
@@ -117,7 +137,7 @@ class _DetailedNoteState extends State<DetailedNote> {
                   child: Padding(
                     padding: EdgeInsets.only(right: 20, left: 20, top: 10),
                     child: QuillEditor(
-                      controller: _controller,
+                      controller: _controller!,
                       scrollController: ScrollController(),
                       scrollable: true,
                       focusNode: _focusNode,
@@ -136,6 +156,26 @@ class _DetailedNoteState extends State<DetailedNote> {
         onPressed: _toggleEdit,
         icon: Icon(_edit == true ? Icons.check : Icons.edit),
       ),
+    );
+  }
+
+  Widget colorPalletes(BuildContext context) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: MemojiColors.values.length,
+      itemBuilder: (context, int index) {
+        Color color = MemojiColors.values[index];
+
+        return ColorPallete(
+          isSelected: _selectedColor == index,
+          color: color,
+          onSelect: () {
+            setState(() {
+              _selectedColor = index;
+            });
+          }
+        );
+      }
     );
   }
 }

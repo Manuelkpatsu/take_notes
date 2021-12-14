@@ -138,8 +138,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return PasswordInputField(
       controller: confirmPasswordController,
       inputAction: TextInputAction.done,
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: (String? value) {
+        if (value!.isEmpty) {
           return 'Please re-enter password';
         }
 
@@ -159,7 +159,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return CustomButton(
       name: 'Reset Password',
       onPressed: () async {
-        if (formKey.currentState.validate()) {
+        if (formKey.currentState!.validate()) {
           await Provider.of<PasswordVM>(context, listen: false).resetPassword(
             token: codeController.text.trim(),
             newPassword: newPasswordController.text.trim(),

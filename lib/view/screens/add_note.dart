@@ -31,7 +31,12 @@ class _AddNoteState extends State<AddNote> {
       body: Column(
         children: [
           QuillToolbar.basic(
-            controller: _controller
+            controller: _controller,
+            showImageButton: false,
+            showVideoButton: false,
+            showCameraButton: false,
+            showAlignmentButtons: true,
+            showHorizontalRule: true,
           ),
           SizedBox(height: 10),
           Padding(

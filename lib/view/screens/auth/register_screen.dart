@@ -188,8 +188,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return PasswordInputField(
       controller: confirmPasswordController,
       inputAction: TextInputAction.done,
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: (String? value) {
+        if (value!.isEmpty) {
           return 'Please re-enter password';
         }
 
@@ -209,7 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return CustomButton(
       name: 'Register Now',
       onPressed: () async {
-        if (formKey.currentState.validate()) {
+        if (formKey.currentState!.validate()) {
           await Provider.of<RegistrationVM>(context, listen: false).register(
             username: usernameController.text.trim(),
             email: emailController.text.trim(),

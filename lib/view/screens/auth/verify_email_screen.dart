@@ -139,7 +139,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     return CustomButton(
       name: 'Verify Email',
       onPressed: () async {
-        if (formKey.currentState.validate()) {
+        if (formKey.currentState!.validate()) {
           await Provider.of<RegistrationVM>(context, listen: false).activateAccount(
             email: emailController.text.trim(),
             code: codeController.text.trim(),

@@ -108,7 +108,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
     return CustomButton(
       name: 'Submit',
       onPressed: () async {
-        if (formKey.currentState.validate()) {
+        if (formKey.currentState!.validate()) {
           await Provider.of<PasswordVM>(context, listen: false).forgotPassword(
             email: emailController.text.trim(),
             context: context,

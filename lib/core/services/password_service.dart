@@ -16,7 +16,7 @@ class PasswordService {
 
   /// Enter your email for token for setting new password
   /// from http server
-  Future<String> forgotPassword({String email}) async {
+  Future<String> forgotPassword({required String email}) async {
     try {
       final response =
           await _http.patch(FORGOT_PASSWORD_ENDPOINT, {'email': email});
@@ -33,9 +33,9 @@ class PasswordService {
 
   /// Create a new password from the http server
   Future<String> resetPassword({
-    String token,
-    String newPassword,
-    String confirmPassword,
+    required String token,
+    required String newPassword,
+    required String confirmPassword,
   }) async {
     try {
       final response = await _http.patch(RESET_PASSWORD_ENDPOINT, {

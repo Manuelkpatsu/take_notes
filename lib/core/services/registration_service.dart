@@ -15,10 +15,10 @@ class RegistrationService {
 
   /// Create a new user from the http server
   Future<String> register({
-    String username,
-    String email,
-    String password,
-    String confirmPassword,
+    required String username,
+    required String email,
+    required String password,
+    required String confirmPassword,
   }) async {
     try {
       final response = await _http.post(REGISTER_USER_ENDPOINT, {
@@ -39,7 +39,10 @@ class RegistrationService {
   }
 
   /// Activate your account from the http server
-  Future<String> activateAccount({String email, String code,}) async {
+  Future<String> activateAccount({
+    required String email,
+    required String code,
+  }) async {
     try {
       final response = await _http.patch(ACTIVATE_ACCOUNT_ENDPOINT, {
         'email': email,

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class TextInputField extends StatelessWidget {
   final TextEditingController controller;
-  final TextInputType inputType;
-  final TextInputAction inputAction;
-  final FormFieldValidator<String> validator;
+  final TextInputType? inputType;
+  final TextInputAction? inputAction;
+  final FormFieldValidator<String>? validator;
   final TextCapitalization textCapitalization;
 
   TextInputField({
-    @required this.controller,
+    required this.controller,
     this.inputType,
     this.inputAction,
     this.validator,

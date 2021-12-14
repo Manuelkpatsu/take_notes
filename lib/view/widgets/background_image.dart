@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BackgroundImage extends StatelessWidget {
   final String image;
 
-  BackgroundImage({ @required this.image });
+  BackgroundImage({ required this.image });
 
   @override
   Widget build(BuildContext context) {

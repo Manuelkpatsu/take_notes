@@ -1,10 +1,10 @@
 class User {
-  bool active;
-  String id;
-  String email;
-  String username;
-  String createdAt;
-  String updatedAt;
+  bool? active;
+  String? id;
+  String? email;
+  String? username;
+  String? createdAt;
+  String? updatedAt;
 
   User({
     this.active,
@@ -31,6 +31,7 @@ class User {
     data['username'] = this.username;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
+    
     return data;
   }
 }
