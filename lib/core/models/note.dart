@@ -4,6 +4,7 @@ class Note {
   String? id;
   String? title;
   String? content;
+  String? userId;
   int? color;
   String? createdAt;
   String? updatedAt;
@@ -12,6 +13,7 @@ class Note {
     this.id,
     this.content,
     this.title,
+    this.userId,
     this.color,
     this.createdAt,
     this.updatedAt,
@@ -21,6 +23,7 @@ class Note {
     id = json['_id'];
     content = json['content'];
     title = json['title'];
+    userId = json['userId'];
     color = json['color'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
