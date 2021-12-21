@@ -26,7 +26,7 @@ class AuthVM extends BaseModel {
   /// Requests a bool to indicate whether a user
   /// is logged in or not
   Future<bool> get isLoggedIn async {
-    return (await _storage.read(ACCESS_TOKEN_KEY)).isNotEmpty;
+    return null != (await _storage.read(ACCESS_TOKEN_KEY));
   }
 
   bool get isLoginComplete => _loginState == LOGIN_STATE_LOGGED_IN;

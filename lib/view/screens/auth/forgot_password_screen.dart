@@ -36,6 +36,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -12,6 +10,7 @@ import 'package:takenotes/core/view_models/api_vm.dart';
 import 'package:takenotes/core/view_models/auth_vm.dart';
 import 'package:takenotes/core/view_models/pref_vm.dart';
 import 'package:takenotes/utils/helper.dart';
+import 'package:takenotes/view/arguments/noteArgument.dart';
 import 'package:takenotes/view/screens/add_note.dart';
 import 'package:takenotes/view/screens/detailed_note.dart';
 import 'package:takenotes/view/widgets/memoji_colors.dart';
@@ -101,21 +100,27 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               itemCount: _notesList.length,
                               staggeredTileBuilder: (index) {
-                                return StaggeredTile.count(1, 1.1);
+                                return StaggeredTile.count(
+                                  1,
+                                  _notesList[index].content!.length > 200
+                                        ? 1.1
+                                        : 1
+                                );
                               },
                               itemBuilder: (context, index) {
                                 Note note = _notesList[index];
-                                print(jsonEncode(note.content));
+                                NoteArgument? noteArgument =
+                                    NoteArgument(note.id!);
 
                                 return NoteGrid(
-                                    title: note.title!,
-                                    content:
-                                        'He always comes through whenever we call on Him',
-                                    updatedAt: note.updatedAt!,
-                                    onPressed: () => Navigator.of(context)
-                                        .pushNamed(DetailedNote.routeName),
-                                    color: MemojiColors.values[
-                                        index % MemojiColors.values.length]);
+                                  note: note,
+                                  onPressed: () =>
+                                      Navigator.of(context).pushNamed(
+                                    DetailedNote.routeName,
+                                    arguments: noteArgument,
+                                  ),
+                                  color: MemojiColors.values[note.color!],
+                                );
                               },
                             )
                           : ListView.builder(
@@ -125,16 +130,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               itemBuilder: (context, index) {
                                 Note note = _notesList[index];
+                                NoteArgument? noteArgument =
+                                    NoteArgument(note.id!);
 
                                 return NoteTile(
-                                  title: note.title!,
-                                  content:
-                                      'He always comes through whenever we call on Him',
-                                  updatedAt: note.updatedAt!,
-                                  onPressed: () => Navigator.of(context)
-                                      .pushNamed(DetailedNote.routeName),
-                                  color: MemojiColors.values[
-                                      index % MemojiColors.values.length],
+                                  note: note,
+                                  onPressed: () =>
+                                      Navigator.of(context).pushNamed(
+                                    DetailedNote.routeName,
+                                    arguments: noteArgument,
+                                  ),
+                                  color: MemojiColors.values[note.color!],
                                 );
                               },
                             ),
@@ -174,76 +180,76 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget drawer() {
     return FutureBuilder(
-      future: _user,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) return Container(
-          width: MediaQuery.of(context).size.width * 0.75,
-          child: Drawer(child: Text('Error: ${snapshot.error}'))
-        );
-        if (snapshot.data == null)
-          return Container(
-            width: MediaQuery.of(context).size.width * 0.75,
-            child: Drawer(
-              child: UserAccountsDrawerHeader(
+        future: _user,
+        builder: (context, snapshot) {
+          if (snapshot.hasError)
+            return Container(
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: Drawer(child: Text('Error: ${snapshot.error}')));
+          if (snapshot.data == null)
+            return Container(
+              width: MediaQuery.of(context).size.width * 0.75,
+              child: Drawer(
+                  child: UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: Colors.black87),
                 accountName: Text(''),
                 accountEmail: Text(''),
                 currentAccountPicture:
                     CircleAvatar(backgroundColor: Colors.white),
-              )
-            ),
-          );
+              )),
+            );
 
-        User? user = snapshot.data as User;
+          User? user = snapshot.data as User;
 
-        return Container(
-          width: MediaQuery.of(context).size.width * 0.75,
-          child: Drawer(
-            child: ListView(
-              children: [
-                UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(color: Colors.black87),
-                  accountName: Text(
-                    user.username!,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  accountEmail: Text(
-                    user.email!,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Text(
-                      Helper.getInitials(
-                          user.username!.isNotEmpty ? user.username! : ""),
-                      style: TextStyle(fontSize: 40, color: Colors.black),
+          return Container(
+            width: MediaQuery.of(context).size.width * 0.75,
+            child: Drawer(
+              child: ListView(
+                children: [
+                  UserAccountsDrawerHeader(
+                    decoration: BoxDecoration(color: Colors.black87),
+                    accountName: Text(
+                      user.username!,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    accountEmail: Text(
+                      user.email!,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Text(
+                        Helper.getInitials(
+                            user.username!.isNotEmpty ? user.username! : ""),
+                        style: TextStyle(fontSize: 40, color: Colors.black),
+                      ),
                     ),
                   ),
-                ),
-                ListTile(
-                  minLeadingWidth: 10,
-                  leading: Icon(
-                    Icons.logout_outlined,
-                    color: Colors.black,
+                  ListTile(
+                    minLeadingWidth: 10,
+                    leading: Icon(
+                      Icons.logout_outlined,
+                      color: Colors.black,
+                    ),
+                    title: Text('Logout', style: TextStyle(fontSize: 16)),
+                    onTap: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      Provider.of<AuthVM>(context, listen: false)
+                          .logout(context);
+                      // Helper.showModalSheet(
+                      //   context,
+                      //   'Do you want to logout?',
+                      //   () {
+                      //     Provider.of<AuthVM>(context, listen: false).logout(context);
+                      //     Navigator.of(context).pop();
+                      //   },
+                      // );
+                    },
                   ),
-                  title: Text('Logout', style: TextStyle(fontSize: 16)),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Helper.showModalSheet(
-                      context,
-                      'Do you want to logout?',
-                      () {
-                        Provider.of<AuthVM>(context, listen: false).logout(context);
-                        Navigator.of(context).pop();
-                      },
-                    );
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      }
-    );
+          );
+        });
   }
 }

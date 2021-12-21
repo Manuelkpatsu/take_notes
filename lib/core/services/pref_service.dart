@@ -18,7 +18,7 @@ class PrefService {
     return _storage.write(IS_TILE, _viewType.index.toString());
   }
 
-  Future<String> isTile() {
+  Future<String?> isTile() {
     return _storage.read(IS_TILE);
   }
 }

@@ -44,6 +44,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Form(
                   key: formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,

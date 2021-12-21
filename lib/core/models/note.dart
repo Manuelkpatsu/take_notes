@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Note {
   String? id;
   String? title;
@@ -36,13 +34,5 @@ class Note {
     data['color'] = this.color;
 
     return data;
-  }
-
-  dynamic stringToJson(String content) {
-    return jsonDecode(content);
-  }
-
-  String jsonToString(dynamic jsonContent) {
-    return jsonEncode(jsonContent);
   }
 }

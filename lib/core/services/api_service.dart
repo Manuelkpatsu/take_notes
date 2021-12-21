@@ -14,7 +14,7 @@ class APIService {
   static const String FETCH_NOTES_ENDPOINT = 'notes';
 
   // The create note endpoint
-  static const String CREATE_NOTE_ENDPOINT = 'create-note';
+  static const String CREATE_NOTE_ENDPOINT = 'notes/create-note';
 
   // The http service
   HttpService _http = sl<HttpService>();
@@ -79,7 +79,7 @@ class APIService {
   // Authenticated user fetches a note from the http server
   Future<Note> fetchNote({required String noteId}) async {
     try {
-      final response = await _http.get(noteId);
+      final response = await _http.get('notes/$noteId');
 
       if (_http.isSuccessful(response)) {
         final parsed = json.decode(response.body);
@@ -101,7 +101,7 @@ class APIService {
     required int? color
   }) async {
     try {
-      final response = await _http.patch(noteId, {
+      final response = await _http.patch('notes/$noteId', {
         'title': title,
         'content': content,
         'color': color,
@@ -120,7 +120,7 @@ class APIService {
   // Authenticated user deletes a note
   Future<String> deleteNote({required String noteId}) async {
     try {
-      final response = await _http.delete(noteId);
+      final response = await _http.delete('notes/$noteId');
 
       if (_http.isSuccessful(response)) {
         return json.decode(response.body)['message'];

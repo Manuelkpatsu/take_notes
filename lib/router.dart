@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:takenotes/view/arguments/noteArgument.dart';
+import 'package:takenotes/view/screens/edit_note.dart';
 
 import 'view/screens/auth/forgot_password_screen.dart';
 import 'view/screens/auth/login_screen.dart';
@@ -30,7 +32,11 @@ class AppRouter {
       case AddNote.routeName:
         return MaterialPageRoute(builder: (_) => AddNote());
       case DetailedNote.routeName:
-        return MaterialPageRoute(builder: (_) => DetailedNote());
+        final args = settings.arguments as NoteArgument;
+        return MaterialPageRoute(builder: (_) => DetailedNote(noteArgument: args));
+      case EditNote.routeName:
+        final args = settings.arguments as NoteArgument;
+        return MaterialPageRoute(builder: (_) => EditNote(noteArgument: args));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

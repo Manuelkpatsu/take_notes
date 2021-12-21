@@ -18,7 +18,7 @@ class HttpService {
     return Uri.parse('$API_LOCALHOST_BASE_URL/$uri');
   }
 
-  Future<String> _getAccessToken() async {
+  Future<String?> _getAccessToken() async {
     return await _storage.read('access-token');
   }
 

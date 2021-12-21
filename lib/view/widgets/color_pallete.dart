@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class ColorPallete extends StatelessWidget {
   final bool isSelected;
-  final VoidCallback onSelect;
+  final VoidCallback? onSelect;
   final Color color;
 
   const ColorPallete({
     Key? key,
     required this.isSelected,
     required this.color,
-    required this.onSelect,
+    this.onSelect,
   }) : super(key: key);
 
   @override

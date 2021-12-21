@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Color(0xDD000000).toMaterialColor(),
               appBarTheme: AppBarTheme(
                 elevation: 0,
-                systemOverlayStyle: SystemUiOverlayStyle.dark,
+                systemOverlayStyle: SystemUiOverlayStyle.light,
                 backgroundColor: Colors.black87,
                 iconTheme: IconThemeData(color: Colors.white),
                 titleTextStyle: TextStyle(

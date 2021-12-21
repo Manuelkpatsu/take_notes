@@ -43,4 +43,28 @@ class Validator {
 
     return null;
   };
+
+  static FormFieldValidator<String> title = (title) {
+    if (title == null || title.isEmpty) {
+      return 'Title is required';
+    }
+
+    if (title.length < 5) {
+      return "Title should be more than five letters.";
+    }
+
+    return null;
+  };
+
+  static FormFieldValidator<String> content = (content) {
+    if (content == null || content.isEmpty) {
+      return 'Content is required';
+    }
+
+    if (content.length < 10) {
+      return "Content should be more than ten letters.";
+    }
+
+    return null;
+  };
 }

@@ -1,17 +1,18 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_quill/models/documents/document.dart';
-import 'package:flutter_quill/widgets/toolbar.dart';
-import 'package:flutter_quill/widgets/editor.dart';
-import 'package:flutter_quill/widgets/controller.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:takenotes/core/models/note.dart';
+import 'package:takenotes/core/view_models/api_vm.dart';
 import 'package:takenotes/utils/helper.dart';
-import 'package:takenotes/view/widgets/color_pallete.dart';
+import 'package:takenotes/view/arguments/noteArgument.dart';
+import 'package:takenotes/view/screens/edit_note.dart';
 import 'package:takenotes/view/widgets/memoji_colors.dart';
 
 class DetailedNote extends StatefulWidget {
   static const routeName = '/detailed_note';
+  final NoteArgument? noteArgument;
+
+  DetailedNote({this.noteArgument});
 
   @override
   _DetailedNoteState createState() => _DetailedNoteState();
@@ -19,163 +20,117 @@ class DetailedNote extends StatefulWidget {
 
 class _DetailedNoteState extends State<DetailedNote> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  FocusNode _focusNode = FocusNode();
-  QuillController? _controller;
-  TextEditingController? _titleController;
-  bool _loading = false;
-  bool _edit = false;
-  int _selectedColor = 0;
+  Future<Note>? _note;
 
   @override
   void initState() {
     super.initState();
-    if (_controller == null && !_loading) {
-      _loading = true;
-      _loadFromAssets();
-    }
+    _note = Provider.of<ApiVM>(context, listen: false)
+        .fetchNote(noteId: widget.noteArgument!.noteId);
   }
 
-  @override
-  void dispose() {
-    _controller!.dispose();
-    super.dispose();
-  }
-
-  Future<void> _loadFromAssets() async {
-    try {
-      final result = await rootBundle.loadString('assets/sample_data.json');
-      final doc = Document.fromJson(jsonDecode(result));
-      setState(() {
-        _controller = QuillController(
-          document: doc,
-          selection: TextSelection.collapsed(offset: 0),
-        );
-        _loading = false;
-        _titleController = TextEditingController(text: 'Hello world');
-      });
-    } catch (error) {
-      final doc = Document()..insert(0, 'Empty asset');
-      setState(() {
-        _controller = QuillController(
-          document: doc,
-          selection: TextSelection.collapsed(offset: 0),
-        );
-        _loading = false;
-        _titleController = TextEditingController(text: '');
-      });
-    }
-  }
-
-  void _toggleEdit() {
-    setState(() {
-      _edit = !_edit;
-    });
+  void _editNote() {
+    Navigator.of(context)
+        .pushNamed(EditNote.routeName, arguments: widget.noteArgument);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text('Edit Note'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Helper.showColorPallete(
-                context: context,
-                child: colorPalletes(context)
+      appBar: AppBar(),
+      body: FutureBuilder<Note>(
+        future: _note,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('An error has occurred!'),
+            );
+          } else if (snapshot.hasData) {
+            final Note? detailedNote = snapshot.data!;
+
+            if (detailedNote != null) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10),
+                    title(detailedNote),
+                    dateCreated(detailedNote.updatedAt!),
+                    SizedBox(height: 20),
+                    content(detailedNote.content!),
+                    SizedBox(height: 20),
+                  ],
+                ),
               );
-            },
-            icon: Icon(Icons.palette_outlined),
-          ),
-        ],
-      ),
-      body: _loading
-          ? Center(
+            } else {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(LineIcons.stickyNote, size: 120, color: Colors.black),
+                    Text(
+                      'No note',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w300, fontSize: 22),
+                    ),
+                  ],
+                ),
+              );
+            }
+          } else {
+            return const Center(
               child: CircularProgressIndicator(),
-            )
-          : Column(
-              children: [
-                QuillToolbar.basic(
-                  controller: _controller!,
-                  showImageButton: false,
-                  showVideoButton: false,
-                  showCameraButton: false,
-                  showAlignmentButtons: true,
-                  showHorizontalRule: true,
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextField(
-                    controller: _titleController,
-                    autofocus: true,
-                    readOnly: !_edit,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    textCapitalization: TextCapitalization.sentences,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: Colors.black12,
-                      hintText: 'Title',
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20, left: 20, top: 10),
-                    child: QuillEditor(
-                      controller: _controller!,
-                      scrollController: ScrollController(),
-                      scrollable: true,
-                      focusNode: _focusNode,
-                      autoFocus: true,
-                      readOnly: !_edit,
-                      expands: false,
-                      placeholder: 'Edit your note',
-                      padding: EdgeInsets.zero,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            );
+          }
+        },
+      ),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text(_edit == true ? 'Done' : 'Edit'),
-        onPressed: _toggleEdit,
-        icon: Icon(_edit == true ? Icons.check : Icons.edit),
+        label: Text('Edit'),
+        onPressed: _editNote,
+        icon: Icon(Icons.edit),
       ),
     );
   }
 
-  Widget colorPalletes(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: MemojiColors.values.length,
-      itemBuilder: (context, int index) {
-        Color color = MemojiColors.values[index];
+  Widget title(Note note) {
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Container(
+            width: 5,
+            color: MemojiColors.values[note.color!],
+          ),
+          SizedBox(width: 5),
+          Expanded(
+            child: Text(
+              note.title!,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-        return ColorPallete(
-          isSelected: _selectedColor == index,
-          color: color,
-          onSelect: () {
-            setState(() {
-              _selectedColor = index;
-            });
-          }
-        );
-      }
+  Widget dateCreated(String date) {
+    return Text(
+      Helper.formatDateTime(date),
+      style: TextStyle(fontSize: 12),
+    );
+  }
+
+  Widget content(String content) {
+    return Text(
+      content,
+      style: TextStyle(
+        fontWeight: FontWeight.w300,
+        fontSize: 16,
+      ),
     );
   }
 }
